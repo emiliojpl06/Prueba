@@ -1,0 +1,29 @@
+{
+  "name": "blogapi",
+  "version": "1.0.0",
+  "description": "Este es un proyecto de prueba de npm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emiliojpl06/blogapi-gui.git"
+  },
+  "keywords": [
+    "javascript",
+    "blogapi",
+    "prueba"
+  ],
+  "author": "EmilioJPL",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emiliojpl06/blogapi-gui/issues"
+  },
+  "homepage": "https://github.com/emiliojpl06/blogapi-gui#readme",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "http-serve": "^1.0.1",
+    "jquery": "^3.4.1"
+  }
+}
