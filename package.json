@@ -4,6 +4,7 @@
   "description": "Este es un proyecto de prueba de npm",
   "main": "index.js",
   "scripts": {
+    "start": "webpack -d",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,7 +24,13 @@
   "homepage": "https://github.com/emiliojpl06/blogapi-gui#readme",
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "express": "^4.17.1",
     "http-serve": "^1.0.1",
-    "jquery": "^3.4.1"
+    "jquery": "^3.4.1",
+    "moment": "^2.24.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9"
   }
 }
