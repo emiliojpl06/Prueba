@@ -172,12 +172,22 @@ $(document).ready(function(){
         var userdata = JSON.parse(localStorage.getItem("blogapi"));
         postbyUser(userdata.id);
     })   
-    /* Busqueda de post */
-    $("body").on("click",".btn-search",function(e){
-        e.preventDefault();
-        var search = $.trim($(".txt-search").val());
-        filtrarPost(search);
-    })
+ /* Crear un Post Nuevo  */
+ $("body").on("click","#new_post",function(e){
+    e.preventDefault();
+    //console.log("Prueba");
+   newPost();
+})   
+
+/* Aqui se ejecuta cuando se le da a guardar al formulario */
+$("body").on("submit","#new_post_form",function(e){
+    e.preventDefault();
+    savepost();
+})
+
+    
+    
+    
  
 })
 
@@ -472,9 +482,87 @@ function getPosts(){
 function getTags(data){
     var html = ``;
     $(data).each(function(index,value){
-        html+=`<a href="javascript:void(0)" class="btn btn-link mx-0 px-0" onclick="filtrarPost('${String($.trim(value))}')">${$.trim(value)}</a>, `;
+        html+=`<a href="javascript:void(0)" class="btn btn-link mx-0 px-0" onclick="filtrarPost('${String($.trim(value))}')">${$.trim(value)}</a>`;
     })
     html = html.slice(0,-2);
     return html;
+}
+
+function newPost(){
+
+    document.getElementById('posts-container').innerHTML = `<form id="new_post_form" style="background-color: rgba(245, 245, 245, 0.551);">
+                                                
+    <h2 class="text-left">
+      <ion-icon name="reorder" role="img" class="hydrated" aria-label="reorder"></ion-icon> Nuevo Post
+    </h2>
+    <br>
+
+    
+                <div class="form-group">
+                    <label for="titulo"><b>Titulo</b></label>
+                    <input type="text" class="form-control" id="title" placeholder="Titulo del post">
+                </div>
+                <div class="form-group">
+                    <label for="texto"><b>Contenido</b></label>
+                    <textarea class="form-control" id="text" placeholder="Escriba aqui el contenido del post" rows="6"></textarea>
+                </div>
+
+                    <label><b>Tags:</b></label>
+                    <input id="tags" type="text" class="form-control" placeholder="tags 1, tags 2..."> <br>
+
+                <button type="reset" class="btn btn-danger" id="btnnuevo"><ion-icon name="sunny" role="img" class="hydrated" aria-label="sunny"></ion-icon>Nuevo</button>
+
+                <button type="submit" class="btn btn-success" id="btnguardar"><ion-icon name="save" role="img" class="hydrated" aria-label="save" ></ion-icon> Guardar</button>
+            </form>`;
+ 
+}
+
+function savepost(){
+    var title = $.trim($("#title").val());
+    var tags = $.trim($("#tags").val());
+    var text = $.trim($("#text").val());
+    if(title != '' && text != ''){
+        var postdata = {
+            title:title,
+            body:text,
+            tags:tags.split(',').map(Function.prototype.call, String.prototype.trim)
+        };
+        if(localStorage.getItem("blogapi")){
+            var userdata = JSON.parse(localStorage.getItem("blogapi"));
+            var url = `${API_PATH}/post`;
+            if(userdata.id > 0 && userdata.token.length == 36){
+                var cabecera = new Headers();
+                cabecera.append("Authorization",'Bearer '+ userdata.token);                    
+                cabecera.append('Content-Type', 'application/json');
+                var init = {
+                    method:'POST',
+                    headers:cabecera,
+                    body:JSON.stringify(postdata)
+                };
+                var myrequest = new Request(url,init);
+                fetch(myrequest).then(function(response){
+                    if(response.ok){
+                        return response.json();
+                    }
+                    throw new Error('La respuesta no es ok...');
+                }).then(function(data){
+                    if(data.id > 0){
+                      //putNewPost(data.id);     
+                        alertshow("Post publicado...","success");
+                        $("#new_post_form")[0].reset();
+                    }else{                                
+                        alertshow("Problemas al publicar comentario...","warning");
+                    }
+                }).catch(function(error){
+                    alertshow("Hubo problema con la peticion fetch"+error.message,"danger");
+                });
+            }else{
+                localStorage.removeItem("blogapi");
+                window.location.href = 'login.html';
+            }
+        }
+    }else{
+        alertshow("Campos requeridos no completado","warning");
+    }
 }
 
