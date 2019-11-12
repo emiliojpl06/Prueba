@@ -60,7 +60,11 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #fff;
+  /*background-color: #fff;*/
+  background-image: url('http://www.baltana.com/files/wallpapers-16/4K-Baby-Groot-HD-Background-Wallpaper-41061.jpg');
+  background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 [tabindex="-1"]:focus {
@@ -6509,7 +6513,7 @@ a.close.disabled {
 }
 
 .bg-primary {
-  background-color: #ff4800d8 !important;
+  background-color: #06649bd8 !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,

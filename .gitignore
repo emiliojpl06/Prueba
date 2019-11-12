@@ -1,1 +1,4 @@
 node_modules/
+public/app/index.js
+public/app/login.js
+public/app/registrarse.js

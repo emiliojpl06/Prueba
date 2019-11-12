@@ -4,8 +4,10 @@
   "description": "Este es un proyecto de prueba de npm",
   "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server --mode development --port 3000 --hot --host 0.0.0.0 --content-base public/",
     "start": "webpack -d",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack -p"
   },
   "repository": {
     "type": "git",
@@ -30,7 +32,13 @@
     "moment": "^2.24.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/preset-env": "^7.6.3",
+    "babel-loader": "^8.0.6",
+    "core-js": "^3.3.2",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9"
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.2"
   }
 }
